@@ -16,6 +16,14 @@ struct afk_list{
 struct afk_list * afk_start;
 struct afk_list * afk_end;
 
+int presend(   //You can send something after connection
+    CURL * curl,
+)
+{
+    xsend(curl, "{\"cmd\":\"join\",\"channel\":\"lounge\",\"nick\":\"cbot\"}"); //see handler.c:6
+    xsend(curl, "{\"cmd\":\"chat\",\"text\":\"I'm using c\"}");
+    return 0;
+}
 int handler(    //ws data handler (will be called from ws-level)
     CURL * curl, //curl handle.
     char * data // data recved from server (JSON encoded).

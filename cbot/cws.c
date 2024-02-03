@@ -1,4 +1,4 @@
-
+// This is websocket driver copied from curl.se
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -86,8 +86,11 @@ static void websocket_close(CURL *curl)
 static void websocket(CURL *curl)
 {
   int i = 0;
-  xsend(curl, "{\"cmd\":\"join\",\"channel\":\"lounge\",\"nick\":\"cbot\"}"); //see handler.c:6
-  xsend(curl, "{\"cmd\":\"chat\",\"text\":\"I'm using c\"}");
+  // joining cmd
+  // considering move to handler.c
+  // xsend(curl, "{\"cmd\":\"join\",\"channel\":\"lounge\",\"nick\":\"cbot\"}"); //see handler.c:6
+  // xsend(curl, "{\"cmd\":\"chat\",\"text\":\"I'm using c\"}");
+  presend(curl);
   //sleep(3);
   while(1) {
     int ret = recv_any(curl);
@@ -116,7 +119,7 @@ int main(void)
 
   curl = curl_easy_init();
   if(curl) {
-    curl_easy_setopt(curl, CURLOPT_URL, "wss://hack.chat/chat-ws");
+    curl_easy_setopt(curl, CURLOPT_URL, "wss://hack.chat/chat-ws"); // websocket address
 
     curl_easy_setopt(curl, CURLOPT_CONNECT_ONLY, 2L); /* websocket style */
 
